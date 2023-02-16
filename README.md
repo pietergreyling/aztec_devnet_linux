@@ -11,8 +11,8 @@
 This step is important in order to reproduce issues across different systems.
 
 ```shell=
-$ sudo apt install lsb-core
-$ lsb_release -a
+sudo apt install lsb-core
+lsb_release -a
 
 LSB Version:    core-11.2ubuntu1-noarch:security-11.2ubuntu1-noarch
 Distributor ID: Ubuntu
@@ -131,17 +131,17 @@ https://docs.docker.com/desktop/install/debian/
 Fedora	yes
 https://docs.docker.com/desktop/install/fedora/
 
-### Steps using the terminal
+### Terminal steps (Option 1)
 
 - Update the apt package index:
 
 ```shell
-$ sudo apt-get update
+sudo apt-get update
 ```
 - Install packages to allow apt to use a repository over HTTPS:
 
 ```shell
-$ sudo apt-get install \
+sudo apt-get install \
     ca-certificates \
     curl \
     gnupg \
@@ -151,8 +151,8 @@ $ sudo apt-get install \
 - Add Docker’s official GPG key:
 
 ```shell
-$ sudo mkdir -m 0755 -p /etc/apt/keyrings
-$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 ```
 
 - Use the following command to set up the repository:
@@ -168,14 +168,15 @@ echo \
 	- Try granting read permission for the Docker public key file before updating the package index:
 
 ```shell
-$ sudo chmod a+r /etc/apt/keyrings/docker.gpg
-$ sudo apt-get update
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+sudo apt-get update
 ```
 
 - Verify that the Docker Engine installation is successful by running the hello-world image:
 
 ```shell
-$ sudo docker run hello-world
+sudo docker run hello-world
+
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
 2db29710123e: Pull complete 
@@ -207,9 +208,9 @@ For more examples and ideas, visit:
 - Download and install the latest Docker Desktop DEB package.
 
 ```shell
-$ cd ~/Downloads
+cd ~/Downloads
 # sudo apt-get install ./docker-desktop-<version>-<arch>.deb
-$ sudo apt-get install ./docker-desktop-4.16.2-amd64.deb
+sudo apt-get install ./docker-desktop-4.16.2-amd64.deb
 ```
 
 #### Potential errors
@@ -226,25 +227,30 @@ The following packages have unmet dependencies.
 E: Unable to correct problems, you have held broken packages.
 ```
 
+```shell
+sudo add-apt-repository "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+```
+
 #### A good reference
 
 https://computingforgeeks.com/install-docker-ce-on-linux-systems/
 
-### Terminal Steps (continued)
+### Terminal steps (Option 2)
 
 ```shell
-$ sudo apt remove docker docker-engine docker.io 2>/dev/null
-$ sudo apt -y install lsb-release gnupg apt-transport-https ca-certificates 
-$ curl software-properties-common
-$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/docker.gpg
-$ sudo add-apt-repository "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-$ sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo apt remove docker docker-engine docker.io 2>/dev/null
+sudo apt -y install lsb-release gnupg apt-transport-https ca-certificates 
+curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/docker.gpg
+sudo add-apt-repository "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 
 ```shell
-$ sudo usermod -aG docker $USER
-$ newgrp docker
-$ docker version               
+sudo usermod -aG docker $USER
+newgrp docker
+docker version               
+
 Client: Docker Engine - Community
  Version:           20.10.23
  API version:       1.41
@@ -278,7 +284,8 @@ Server: Docker Engine - Community
 ```
 
 ```shell
-$ docker info
+docker info
+
 Client:
  Context:    default
  Debug Mode: false
@@ -335,43 +342,44 @@ Server:
  Live Restore Enabled: false
 ```
 
-### Docker Installation Options on Linux
+### Terminal steps (Option 3 and Summary)
 
 #### To recap - Docker and Docker Compose prerequisites
 
 https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/How-to-install-Docker-and-docker-compose-on-Ubuntu
 
 ```shell
-$ sudo apt-get install curl
-$ sudo apt-get install gnupg
-$ sudo apt-get install ca-certificates
-$ sudo apt-get install lsb-release
+sudo apt-get install curl
+sudo apt-get install gnupg
+sudo apt-get install ca-certificates
+sudo apt-get install lsb-release
 ```
 
 #### Add Docker and docker compose support to the Ubuntu packages list
 
 ```shell
-$ echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-pluginsudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-pluginlinux/ubuntu   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-pluginsudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-pluginlinux/ubuntu   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
 #### Download the docker gpg file to Ubuntu
 
 ```shell
-$ sudo mkdir -p /etc/apt/keyrings
-$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 ```
  
 #### Install Docker and Docker Compose on Ubuntu
 
 ```shell
-$ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-$ sudo apt install docker-compose
+sudo add-apt-repository "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo apt install docker-compose
 ```
  
 #### Verify the Docker and Docker Compose installation on Ubuntu
 
 ```shell
-$ sudo docker run hello-world
+sudo docker run hello-world
 
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
@@ -421,14 +429,14 @@ https://docs.aztec.network/developers/local-devnet
 For a simple, fresh Ethereum network + Aztec sequencer without any bridge contracts, run
 
 ```shell
-$ curl -s https://raw.githubusercontent.com/AztecProtocol/dev-rel/main/docker-compose.dev.yml | docker-compose -f - up --force-recreate
+curl -s https://raw.githubusercontent.com/AztecProtocol/dev-rel/main/docker-compose.dev.yml | docker-compose -f - up --force-recreate
 ```
 
 - https://docs.aztec.network/developers/local-devnet#basic-network
 
 ```shell=
-$ cd aztecdocker
-$ aztecdocker curl -s https://raw.githubusercontent.com/AztecProtocol/dev-rel/main/docker-compose.dev.yml | docker-compose -f - up --force-recreate
+cd aztecdocker
+aztecdocker curl -s https://raw.githubusercontent.com/AztecProtocol/dev-rel/main/docker-compose.dev.yml | docker-compose -f - up --force-recreate
 
 Creating network "aztecdocker_default" with the default driver
 Pulling contracts (aztecprotocol/contracts:latest)...
@@ -624,7 +632,8 @@ Stopping aztecdocker_contracts_1 ... done
 https://docs.docker.com/engine/reference/commandline/image_ls/
 
 ```shell=
-$ docker image ls --all      
+docker image ls --all      
+
 REPOSITORY                TAG       IMAGE ID       CREATED       SIZE
 aztecprotocol/contracts   latest    5e8b424de519   12 days ago   855MB
 aztecprotocol/falafel     latest    2be2f469a653   3 weeks ago   793MB
@@ -635,7 +644,8 @@ aztecprotocol/falafel     latest    2be2f469a653   3 weeks ago   793MB
 https://docs.docker.com/engine/reference/commandline/ps/
 
 ```shell=
-$ docker ps
+docker ps
+
 CONTAINER ID   IMAGE                            COMMAND                  CREATED          STATUS          PORTS                            NAMES
 264772516b88   aztecprotocol/falafel:latest     "yarn start:e2e"         38 minutes ago   Up 38 minutes   80/tcp, 0.0.0.0:8081->8081/tcp   aztecdocker_falafel_1
 c25746d8e04f   aztecprotocol/contracts:latest   "./scripts/start_e2e…"   38 minutes ago   Up 38 minutes   0.0.0.0:8545->8544/tcp           aztecdocker_contracts_1
@@ -644,7 +654,8 @@ c25746d8e04f   aztecprotocol/contracts:latest   "./scripts/start_e2e…"   38 mi
 https://docs.docker.com/engine/reference/commandline/container_ls/
 
 ```shell=
-$ docker container ls --all
+docker container ls --all
+
 CONTAINER ID   IMAGE                            COMMAND                  CREATED        STATUS                      PORTS     NAMES
 3d60d46fca39   aztecprotocol/falafel:latest     "yarn start:e2e"         20 hours ago   Exited (1) 20 hours ago               aztecdocker_falafel_1
 73322b12c96e   aztecprotocol/contracts:latest   "./scripts/start_e2e…"   20 hours ago   Exited (143) 20 hours ago             aztecdocker_contracts_1
@@ -674,7 +685,7 @@ Executing `$ ps` within the Docker Desktop Terminal UI tells us that the default
 So we can then do the following to shell into the container.
 
 ```shell=
-$ docker exec -it aztecdocker_falafel_1 /bin/sh 
+docker exec -it aztecdocker_falafel_1 /bin/sh 
 
 /usr/src/yarn-project/falafel # pwd
 /usr/src/yarn-project/falafel
