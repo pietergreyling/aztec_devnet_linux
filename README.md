@@ -133,9 +133,12 @@ https://docs.docker.com/desktop/install/fedora/
 
 ### Steps using the terminal
 
+- Update the apt package index:
+
 ```shell
 $ sudo apt-get update
 ```
+- Install packages to allow apt to use a repository over HTTPS:
 
 ```shell
 $ sudo apt-get install \
@@ -145,17 +148,67 @@ $ sudo apt-get install \
     lsb-release
 ```
 
+- Add Docker’s official GPG key:
+
 ```shell
-$ sudo mkdir -p /etc/apt/keyrings
+$ sudo mkdir -m 0755 -p /etc/apt/keyrings
 $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 ```
 
+- Use the following command to set up the repository:
+
+```shell
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+- Receiving a GPG error when running apt-get update?
+	- Your default umask may be incorrectly configured, preventing detection of the repository public key file. 
+	- Try granting read permission for the Docker public key file before updating the package index:
+
 ```shell
 $ sudo chmod a+r /etc/apt/keyrings/docker.gpg
+$ sudo apt-get update
 ```
+
+- Verify that the Docker Engine installation is successful by running the hello-world image:
+
+```shell
+$ sudo docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+2db29710123e: Pull complete 
+Digest: sha256:6e8b6f026e0b9c419ea0fd02d3905dd0952ad1feea67543f525c73a0a790fefb
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+```
+
+- Download and install the latest Docker Desktop DEB package.
 
 ```shell
 $ cd ~/Downloads
+# sudo apt-get install ./docker-desktop-<version>-<arch>.deb
 $ sudo apt-get install ./docker-desktop-4.16.2-amd64.deb
 ```
 
