@@ -10,7 +10,7 @@
 
 This step is important in order to reproduce issues across different systems.
 
-```shell=
+```shell=bash
 sudo apt install lsb-core
 lsb_release -a
 
