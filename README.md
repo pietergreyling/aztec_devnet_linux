@@ -213,7 +213,7 @@ $ cd ~/Downloads
 $ sudo apt-get install ./docker-desktop-4.16.2-amd64.deb
 ```
 
-#### Potential errors
+- Potential errors
 
 ```shell
 Some packages could not be installed. This may mean that you have
