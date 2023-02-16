@@ -120,7 +120,7 @@ Docker does not provide support for running Docker Desktop in nested virtualizat
 
 Docker provides .deb and .rpm packages from the following Linux distributions and architectures:
 
-Platform	x86_64 / amd64
+- Platform	x86_64 / amd64
 
 - Ubuntu	yes
 	- https://docs.docker.com/desktop/install/ubuntu/
