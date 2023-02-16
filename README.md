@@ -122,14 +122,30 @@ Docker provides .deb and .rpm packages from the following Linux distributions an
 
 Platform	x86_64 / amd64
 
-Ubuntu	yes
-https://docs.docker.com/desktop/install/ubuntu/
+- Ubuntu	yes
+	- https://docs.docker.com/desktop/install/ubuntu/
 
-Debian	yes
-https://docs.docker.com/desktop/install/debian/
+- Debian	yes
+	- https://docs.docker.com/desktop/install/debian/
 
-Fedora	yes
-https://docs.docker.com/desktop/install/fedora/
+- Fedora	yes
+	- https://docs.docker.com/desktop/install/fedora/
+
+Make sure to install KVM virtualization support:
+
+- https://docs.docker.com/desktop/install/linux-install/#kvm-virtualization-support
+
+For example, to install on Ubuntu:
+
+```shell=
+$ sudo apt install qemu-kvm libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager
+```
+
+And to remove:
+
+```shell=
+$ sudo apt remove --purge qemu-kvm libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager
+``
 
 ### Terminal steps (Option 1)
 
