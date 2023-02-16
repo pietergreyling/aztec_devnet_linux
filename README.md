@@ -145,7 +145,7 @@ And to remove:
 
 ```shell=
 $ sudo apt remove --purge qemu-kvm libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager
-``
+```
 
 ### Terminal steps (Option 1)
 
